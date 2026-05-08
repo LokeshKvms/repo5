@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/LokeshKvms/repo5.git']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    - 'asia-south1-docker.pkg.dev/$PROJECT_ID/docker-repo/gke-flask-app:$SHORT_SHA'
+    - './repo5'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - 'asia-south1-docker.pkg.dev/$PROJECT_ID/docker-repo/gke-flask-app:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
