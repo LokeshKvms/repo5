@@ -13,5 +13,16 @@ steps:
     - 'push'
     - 'asia-south1-docker.pkg.dev/$PROJECT_ID/docker-repo/gke-flask-app:$SHORT_SHA'
 
+#kubectl set image deployment/cicd-app flask-app-sha256-1=asia-south1-docker.pkg.dev/$PROJECT_ID/docker-repo/gke-flask-app:$SHORT_SHA
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'set'
+    - 'image'
+    - 'deployment/cicd-app'
+    - 'flask-app-sha256-1=asia-south1-docker.pkg.dev/$PROJECT_ID/docker-repo/gke-flask-app:$SHORT_SHA'
+  env:
+    - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=cicd-cluster'
+
 options:
   logging: CLOUD_LOGGING_ONLY
